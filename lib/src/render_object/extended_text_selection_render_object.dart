@@ -108,7 +108,7 @@ abstract class ExtendedTextSelectionRenderObject extends ExtendedTextRenderBox {
     assert(cause != null);
     layoutText(minWidth: constraints.minWidth, maxWidth: constraints.maxWidth);
     assert(lastTapDownPosition != null);
-    if (onSelectionChanged != null) {
+    if (onSelectionChanged == null) {
       return;
     }
     final TextPosition position = textPainter
