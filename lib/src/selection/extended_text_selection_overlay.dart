@@ -333,6 +333,7 @@ class ExtendedTextSelectionOverlay {
           midpoint,
           endpoints,
           selectionDelegate,
+          null,
         ),
       ),
     );

@@ -7,6 +7,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
+
 const double _kHandleSize = 22.0;
 
 // Minimal padding from all edges of the selection toolbar to all edges of the
@@ -70,7 +71,8 @@ class ExtendedMaterialTextSelectionToolbar extends StatelessWidget {
 
 /// Centers the toolbar around the given position, ensuring that it remains on
 /// screen.
-class ExtendedMaterialTextSelectionToolbarLayout extends SingleChildLayoutDelegate {
+class ExtendedMaterialTextSelectionToolbarLayout
+    extends SingleChildLayoutDelegate {
   ExtendedMaterialTextSelectionToolbarLayout(
       this.screenSize, this.globalEditableRegion, this.position);
 
@@ -151,6 +153,7 @@ class ExtendedMaterialTextSelectionControls extends TextSelectionControls {
     Offset position,
     List<TextSelectionPoint> endpoints,
     TextSelectionDelegate delegate,
+    ClipboardStatusNotifier clipboardStatusNotifier,
   ) {
     assert(debugCheckHasMediaQuery(context));
     assert(debugCheckHasMaterialLocalizations(context));
@@ -184,7 +187,9 @@ class ExtendedMaterialTextSelectionControls extends TextSelectionControls {
         ),
         child: ExtendedMaterialTextSelectionToolbar(
           handleCut: canCut(delegate) ? () => handleCut(delegate) : null,
-          handleCopy: canCopy(delegate) ? () => handleCopy(delegate) : null,
+          handleCopy: canCopy(delegate)
+              ? () => handleCopy(delegate, clipboardStatusNotifier)
+              : null,
           handlePaste: canPaste(delegate) ? () => handlePaste(delegate) : null,
           handleSelectAll:
               canSelectAll(delegate) ? () => handleSelectAll(delegate) : null,

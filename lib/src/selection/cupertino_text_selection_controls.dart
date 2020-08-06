@@ -58,7 +58,8 @@ const EdgeInsets _kToolbarButtonPadding =
 ///
 /// * [TextSelectionControls.buildToolbar], where [ExtendedCupertinoTextSelectionToolbar]
 ///   will be used to build an iOS-style toolbar.
-class ExtendedCupertinoTextSelectionToolbar extends SingleChildRenderObjectWidget {
+class ExtendedCupertinoTextSelectionToolbar
+    extends SingleChildRenderObjectWidget {
   const ExtendedCupertinoTextSelectionToolbar({
     Key key,
     double barTopY,
@@ -82,7 +83,8 @@ class ExtendedCupertinoTextSelectionToolbar extends SingleChildRenderObjectWidge
 
   @override
   ExtendedCupertinoToolbarRenderBox createRenderObject(BuildContext context) =>
-      ExtendedCupertinoToolbarRenderBox(_barTopY, _arrowTipX, _isArrowPointingDown, null);
+      ExtendedCupertinoToolbarRenderBox(
+          _barTopY, _arrowTipX, _isArrowPointingDown, null);
 
   @override
   void updateRenderObject(
@@ -259,7 +261,8 @@ class ExtendedCupertinoToolbarRenderBox extends RenderShiftedBox {
         ..strokeWidth = 2.0
         ..style = PaintingStyle.stroke;
 
-      final ExtendedCupertinoToolbarParentData childParentData = child.parentData;
+      final ExtendedCupertinoToolbarParentData childParentData =
+          child.parentData;
       context.canvas.drawPath(
           _clipPath().shift(offset + childParentData.offset), _debugPaint);
       return true;
@@ -321,6 +324,7 @@ class ExtendedCupertinoTextSelectionControls extends TextSelectionControls {
     Offset position,
     List<TextSelectionPoint> endpoints,
     TextSelectionDelegate delegate,
+    ClipboardStatusNotifier clipboardStatusNotifier,
   ) {
     assert(debugCheckHasMediaQuery(context));
     final MediaQueryData mediaQuery = MediaQuery.of(context);
@@ -386,7 +390,10 @@ class ExtendedCupertinoTextSelectionControls extends TextSelectionControls {
 
     addToolbarButtonIfNeeded(localizations.cutButtonLabel, canCut, handleCut);
     addToolbarButtonIfNeeded(
-        localizations.copyButtonLabel, canCopy, handleCopy);
+      localizations.copyButtonLabel,
+      canCopy,
+      (selectionDelegate) => handleCopy(delegate, clipboardStatusNotifier),
+    );
     addToolbarButtonIfNeeded(
         localizations.pasteButtonLabel, canPaste, handlePaste);
     addToolbarButtonIfNeeded(
